@@ -127,15 +127,6 @@ const Index = () => {
           )}
         </AnimatePresence>
 
-        {/* Demo Note */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-          className="text-center text-sm text-muted-foreground mt-8"
-        >
-          جرب البحث بـ: 123456 أو 654321 أو 111222
-        </motion.p>
       </main>
 
       {/* Footer */}

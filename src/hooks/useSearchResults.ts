@@ -1,15 +1,7 @@
 import { useState, useCallback } from "react";
 import type { StudentResult, SearchType } from "@/types/result";
 
-// This will be replaced with actual API call once Django backend is ready
-const MOCK_DELAY = 1500;
-
-// Mock data for demonstration
-const MOCK_RESULTS: StudentResult[] = [
-  { name: "أحمد محمد علي", seat_number: "123456", degree: 385 },
-  { name: "فاطمة أحمد حسن", seat_number: "654321", degree: 290 },
-  { name: "محمود سامي عبدالله", seat_number: "111222", degree: 180 },
-];
+const API_BASE_URL = "http://127.0.0.1:8000/api/results/search";
 
 interface UseSearchResultsReturn {
   result: StudentResult | null;
@@ -36,39 +28,23 @@ export function useSearchResults(): UseSearchResultsReturn {
     setLastQuery(query);
 
     try {
-      // Simulate API call - replace with actual fetch when API is ready
-      await new Promise(resolve => setTimeout(resolve, MOCK_DELAY));
-
-      // Mock search logic
-      const found = MOCK_RESULTS.find(r => 
-        type === "seat_number" 
-          ? r.seat_number === query 
-          : r.name.includes(query)
-      );
-
-      if (found) {
-        setResult(found);
-      } else {
+      const endpoint = type === "seat_number" 
+        ? `${API_BASE_URL}/seat/number/${query}/`
+        : `${API_BASE_URL}/name/${encodeURIComponent(query)}/`;
+      
+      const response = await fetch(endpoint);
+      
+      if (response.status === 404) {
         setNotFound(true);
+        return;
       }
-
-      // Actual API call would look like:
-      // const endpoint = type === "seat_number" 
-      //   ? `/api/results/seat/${query}`
-      //   : `/api/results/name/${encodeURIComponent(query)}`;
-      // const response = await fetch(`${API_BASE_URL}${endpoint}`);
-      // 
-      // if (response.status === 404) {
-      //   setNotFound(true);
-      //   return;
-      // }
-      // 
-      // if (!response.ok) {
-      //   throw new Error("حدث خطأ أثناء البحث");
-      // }
-      // 
-      // const data = await response.json();
-      // setResult(data);
+      
+      if (!response.ok) {
+        throw new Error("حدث خطأ أثناء البحث");
+      }
+      
+      const data = await response.json();
+      setResult(data);
 
     } catch (err) {
       setError(err instanceof Error ? err.message : "حدث خطأ غير متوقع");
