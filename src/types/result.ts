@@ -1,6 +1,6 @@
 export interface StudentResult {
   name: string;
-  seat_number: string;
+  Seat_number: string;
   degree: number;
 }
 

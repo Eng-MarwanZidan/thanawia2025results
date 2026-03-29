@@ -65,10 +65,10 @@ const Index = () => {
           </div>
 
           <h1 className="text-3xl md:text-4xl font-bold mb-3 bg-gradient-to-l from-primary to-primary/70 bg-clip-text text-transparent">
-            نتائج الثانوية العامة
+            نتائج الثانوية العامة 2025 
           </h1>
           <p className="text-muted-foreground text-lg">
-            ابحث عن نتيجتك برقم الجلوس أو الاسم
+          ابحث عن نتيجتك برقم الجلوس أو الاسم رباعي بالعربي
           </p>
         </motion.div>
 
@@ -131,7 +131,7 @@ const Index = () => {
 
       {/* Footer */}
       <footer className="relative z-10 py-6 text-center text-sm text-muted-foreground">
-        <p>نتائج الثانوية العامة © 2024</p>
+        <p>نتائج الثانوية العامة © 2025</p>
       </footer>
     </div>
   );

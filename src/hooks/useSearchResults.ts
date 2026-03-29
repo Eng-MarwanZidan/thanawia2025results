@@ -29,9 +29,8 @@ export function useSearchResults(): UseSearchResultsReturn {
 
     try {
       const endpoint = type === "seat_number" 
-        ? `${API_BASE_URL}/seat/number/${query}/`
-        : `${API_BASE_URL}/name/${encodeURIComponent(query)}/`;
-      
+      ? `${API_BASE_URL}/seat/number/?query=${encodeURIComponent(query)}`
+      : `${API_BASE_URL}/name/?query=${encodeURIComponent(query)}`;
       const response = await fetch(endpoint);
       
       if (response.status === 404) {
@@ -44,7 +43,7 @@ export function useSearchResults(): UseSearchResultsReturn {
       }
       
       const data = await response.json();
-      setResult(data);
+      setResult(data[0]);
 
     } catch (err) {
       setError(err instanceof Error ? err.message : "حدث خطأ غير متوقع");
